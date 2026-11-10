@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Normas ISO/IEC</title>
+<meta name="description" content="Apresentação: ISO, IEC, ABNT e as normas ISO/IEC de qualidade de software — Fundamentos de Engenharia de Software, Univille 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1b2f8a; --blue-2:#14246e;
+  --grey:#cfd1d6; --grey-2:#a9acb4;
+  --ink:#000; --shadow:#070b24;
+  --red:#c8232c; --red-ink:#9e1119;
+  --yellow:#f5d04a;
+  --c1:#46c8e8;  /* siglas.iso */
+  --c2:#f5d04a;  /* normas.iso */
+  --c3:#3fbf6a;  /* square.iso */
+  --c4:#ff8a5c;  /* ciclo.iso */
+  --c5:#ff7aa2;  /* conceitos.iso */
+  --crt:#000; --crt-fg:#b9bcc2; --crt-hi:#fff; --crt-dim:#8f939c; --crt-ok:#3fbf6a;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --pix:"VT323", "IBM Plex Mono", monospace;
+
+  /* unidade fluida: 1u = 1% da largura de um quadro 16:9 que cabe na tela */
+  --u:min(1vw, 1.7778vh);
+  --t-body:max(15px, calc(var(--u) * 1.32));
+  --t-small:max(13px, calc(var(--u) * 1.14));
+  --t-h2:max(30px, calc(var(--u) * 3.6));
+  --t-h3:max(22px, calc(var(--u) * 2.2));
+  --t-tt:max(22px, calc(var(--u) * 2.4));
+  --t-bar:max(12px, calc(var(--u) * 1.2));
+  --bar:max(34px, calc(var(--u) * 2.9));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--crt);overflow:hidden}
+body{font-family:var(--mono);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+#stage{position:fixed;inset:0;height:100dvh;background:var(--blue);overflow:hidden}
+.slide{position:absolute;inset:0;display:none}
+.slide.on{display:block}
+
+/* ---------- barras do instalador ---------- */
+.topbar,.keybar{position:absolute;left:0;right:0;height:var(--bar);display:flex;align-items:center;gap:calc(var(--u)*2.4);padding:0 calc(var(--u)*1.8);font-size:var(--t-bar);white-space:nowrap;overflow:hidden}
+.topbar{top:0;color:var(--yellow);background:var(--blue-2);justify-content:space-between}
+.topbar b{color:#fff;font-weight:600}
+.keybar{bottom:0;background:var(--grey);color:var(--ink)}
+.keybar kbd{font-family:var(--mono);background:var(--ink);color:var(--grey);padding:0 .45em;margin-right:.45em}
+.keybar .gauge{margin-left:auto;display:flex;align-items:center;gap:.8em}
+.gauge .track{width:calc(var(--u)*16);min-width:80px;height:1.1em;border:2px solid var(--ink);padding:2px}
+.gauge .fill{display:block;height:100%;background:var(--red)}
+
+/* ---------- caixa de diálogo ---------- */
+.desk{position:absolute;top:var(--bar);bottom:var(--bar);left:0;right:0;display:flex;align-items:center;justify-content:center;padding:calc(var(--u)*2.2) calc(var(--u)*3.4) calc(var(--u)*2.4)}
+.dlg{background:var(--grey);padding:calc(var(--u)*.9);box-shadow:calc(var(--u)*1.2) calc(var(--u)*1.2) 0 var(--shadow);width:100%;max-width:calc(var(--u)*96);max-height:100%;display:flex;flex-direction:column;min-height:0}
+.dlg-in{border:5px double #2b2d33;padding:calc(var(--u)*2.6) calc(var(--u)*3) calc(var(--u)*1.3);position:relative;display:flex;flex-direction:column;min-height:0;flex:1 1 auto}
+.dlg-in>.tt{position:absolute;top:-.62em;left:50%;transform:translateX(-50%);background:var(--grey);padding:0 .5em;font:var(--t-tt)/1 var(--pix);color:var(--blue);white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
+.scroll{overflow:auto;min-height:0;flex:0 1 auto;padding-right:6px;scrollbar-color:#2b2d33 var(--grey-2)}
+.dlg h2{font:400 var(--t-h2)/.95 var(--pix);margin-bottom:calc(var(--u)*1.1)}
+.dlg h3{font:400 var(--t-h3)/1 var(--pix);margin-bottom:.4em}
+.dlg p,.dlg li{font-size:var(--t-body);line-height:1.45}
+.dlg p{max-width:66ch}
+.dlg p+p{margin-top:.6em}
+.small{font-size:var(--t-small)!important;color:#2e3038}
+.buttons{display:flex;justify-content:center;gap:calc(var(--u)*4);margin-top:calc(var(--u)*1.2);font-size:var(--t-body);flex-wrap:wrap}
+.buttons button{font:inherit;background:none;border:0;color:var(--ink);cursor:pointer;padding:2px 10px}
+.buttons button.def{background:var(--red);color:#fff}
+.buttons button:focus-visible,.boot button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+
+.cols{display:grid;gap:calc(var(--u)*3.4)}
+.c2{grid-template-columns:1.1fr 1fr}
+.c3{grid-template-columns:repeat(3,1fr)}
+
+.disc-tag{display:inline-block;font:var(--t-h3)/1 var(--pix);padding:.1em .4em 0;background:var(--ink);color:var(--acc,#fff);margin-right:.35em;vertical-align:.12em}
+.chip{display:inline-block;font-size:var(--t-small);font-weight:600;padding:0 .5em;white-space:nowrap}
+.chip.prod{background:var(--blue);color:#fff}
+.chip.proc{background:var(--ink);color:var(--yellow)}
+.chip.in{background:#5b2a00;color:#fff}
+.chip.ex{background:#0d4d5c;color:#fff}
+.chip.us{background:#7a0f35;color:#fff}
+
+/* tabela estilo ls -l */
+.ls{font-size:var(--t-body);line-height:1.35;width:100%;border-collapse:collapse}
+.ls td{padding:.18em .9em .18em 0;vertical-align:top}
+.ls td:last-child{padding-right:0}
+.ls td.name{font-weight:700;white-space:nowrap}
+.ls td.dim{color:#3d404a}
+.ls tr+tr td{border-top:1px dashed var(--grey-2)}
+
+.kv{display:flex;align-items:baseline;font-size:var(--t-body);line-height:1.7}
+.kv .k{white-space:nowrap}
+.kv .fill{flex:1;border-bottom:3px dotted #7a7e88;margin:0 .6em;transform:translateY(-.3em);min-width:1em}
+.kv .v{font-weight:700;text-align:right}
+
+.note{border-left:8px solid var(--red);padding:.2em 0 .2em 1em;font-size:var(--t-body);line-height:1.45;margin-top:calc(var(--u)*1.4)}
+.note b{color:var(--red-ink)}
+
+/* passos numerados (sequências reais) */
+.steps{list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:2.2em 1fr;gap:.6em;padding:.2em 0}
+.steps li::before{counter-increment:s;content:counter(s);font:var(--t-h3)/1.1 var(--pix);background:var(--ink);color:var(--grey);text-align:center;height:1.1em}
+
+/* ---------- telas de console ---------- */
+.crt{position:absolute;inset:0;background:var(--crt);color:var(--crt-fg);padding:calc(var(--u)*4) calc(var(--u)*5.2);font-size:var(--t-body);line-height:1.55;display:flex;flex-direction:column;overflow:auto}
+.crt::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 2px,transparent 2px 4px)}
+.crt .hi{color:var(--crt-hi)} .crt .ok{color:var(--crt-ok)} .crt .dim{color:var(--crt-dim)} .crt .acc{color:var(--acc)}
+.crt a{color:var(--crt-hi)}
+.ln{white-space:pre-wrap}
+.slide.on .ln{animation:line 1ms linear both;animation-delay:calc(var(--i,0) * 110ms)}
+@keyframes line{from{opacity:0}to{opacity:1}}
+.cursor{display:inline-block;width:.6em;height:1em;background:currentColor;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.big{margin-top:auto;padding-top:calc(var(--u)*2)}
+.big h1{font:400 max(72px, calc(var(--u)*20))/.8 var(--pix);color:var(--acc);letter-spacing:.02em;overflow-wrap:anywhere}
+.big p{font-size:max(17px, calc(var(--u)*2.1));color:var(--crt-hi);margin-top:.5em}
+.big p i{color:var(--crt-fg)}
+
+.bios-logo{position:absolute;right:calc(var(--u)*5.2);top:calc(var(--u)*4);text-align:right;font:max(20px,calc(var(--u)*1.9))/1.1 var(--pix);color:var(--crt-hi)}
+.bios-logo .star{font-size:3.6em;line-height:.8;color:var(--c3)}
+.bios-title h1{font:400 max(56px, calc(var(--u)*12.5))/.85 var(--pix);color:var(--crt-hi)}
+.bios-title h1 span:nth-child(1){color:var(--c1)}
+.bios-title h1 span:nth-child(2){color:var(--c2)}
+.bios-title h1 span:nth-child(3){color:var(--c3)}
+.bios-title p{font-size:max(17px, calc(var(--u)*1.9));margin-top:.6em}
+
+/* ---------- menu de boot ---------- */
+.boot{position:absolute;inset:0;background:var(--crt);color:var(--crt-fg);display:flex;align-items:center;justify-content:center;padding:calc(var(--u)*3);overflow:auto}
+.boot .bootbox{width:100%;max-width:calc(var(--u)*80)}
+.boot h2{font:400 max(26px,calc(var(--u)*2.9))/1.05 var(--pix);color:var(--crt-hi);text-align:center;margin-bottom:calc(var(--u)*1.6)}
+.boot ul{list-style:none;border:3px solid var(--crt-fg);padding:calc(var(--u)*1.1) 0}
+.boot button{all:unset;box-sizing:border-box;display:flex;gap:1em;width:100%;padding:.4em 1.4em;font:var(--t-body)/1.4 var(--mono);color:var(--crt-fg);cursor:pointer}
+.boot button b{flex:0 0 11em;font-weight:700;color:var(--acc,var(--crt-hi))}
+.boot button.sel{background:var(--crt-fg);color:#000}
+.boot button.sel b{color:#000}
+.boot .help{margin-top:calc(var(--u)*1.6);font-size:var(--t-small);line-height:1.6;color:#9a9ea7;text-align:center}
+
+/* ---------- CD (trocadilho) ---------- */
+.cd{width:min(100%, calc(var(--u)*24));aspect-ratio:1;border-radius:50%;position:relative;margin:auto;
+  background:radial-gradient(circle,var(--grey) 0 9%,#8a8d95 9% 10%,transparent 10% 30%,rgba(255,255,255,.35) 30% 30.5%,transparent 30.5%),
+   conic-gradient(from 20deg,#d9dde6,#a9e4f2,#e9d2f4,#f6eeb5,#bfe9cf,#d9dde6,#c6d0f7,#f1c9d6,#d9dde6);
+  box-shadow:0 0 0 3px #2b2d33, 10px 10px 0 var(--shadow);animation:spin 9s linear infinite}
+.cd::after{content:"ISO 9660";position:absolute;left:50%;top:20%;transform:translateX(-50%);font:max(18px,calc(var(--u)*2))/1 var(--pix);color:#1d1f24}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- decodificador ---------- */
+.decode{display:flex;justify-content:center;flex-wrap:wrap;row-gap:1em;margin:.4em 0}
+.seg{display:flex;flex-direction:column;align-items:center}
+.seg .t{font:400 max(34px, calc(var(--u)*6))/1 var(--pix);padding:0 .15em}
+.seg .br{width:calc(100% - 12px);height:.9em;border:4px solid var(--c);border-top:0}
+.seg .lb{margin-top:.5em;font-size:var(--t-small);line-height:1.35;text-align:center;max-width:15em}
+.seg .lb b{display:block;color:var(--c)}
+
+/* ---------- SPICE: níveis ---------- */
+.levels{display:grid;gap:.35em;font-size:var(--t-body)}
+.lv{display:grid;grid-template-columns:1.6em 9.5em 1fr;align-items:center;gap:.6em}
+.lv .n{font:var(--t-h3)/1 var(--pix);text-align:center;background:var(--ink);color:var(--grey)}
+.lv .bar{height:1em;border:2px solid var(--ink);padding:2px}
+.lv .bar i{display:block;height:100%;background:var(--red);width:calc(var(--w) * 1%)}
+
+/* ---------- SQuaRE ---------- */
+.square{display:grid;gap:calc(var(--u)*1.2);grid-template-columns:repeat(3,1fr);grid-template-areas:"gest gest gest" "req mod aval" "ext med med"}
+.box{border:3px solid var(--ink);padding:.6em .9em;background:#dfe0e4}
+.box .code{font:var(--t-h3)/1 var(--pix);display:block}
+.box b{font-size:var(--t-body);display:block}
+.box span.d{font-size:var(--t-small);line-height:1.4;display:block;color:#2e3038}
+.box.core{background:var(--ink);color:var(--grey)}
+.box.core span.d{color:#d6d8dd}
+.a-gest{grid-area:gest}.a-req{grid-area:req}.a-mod{grid-area:mod}.a-aval{grid-area:aval}.a-med{grid-area:med}.a-ext{grid-area:ext}
+
+/* ---------- cadeia de influência ---------- */
+.chain{display:flex;align-items:stretch;gap:0;margin:.4em 0}
+.chain .box{flex:1;display:flex;flex-direction:column;justify-content:center}
+.chain .arr{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 .4em;font-size:var(--t-small);line-height:1.3;text-align:center}
+.chain .arr .f{color:var(--ink);font-weight:700}
+.chain .arr .b{color:#3d404a}
+.chain .arr .v{display:none}
+
+/* ---------- ciclo de vida ---------- */
+.life{display:grid;gap:0}
+.life .row{display:grid;grid-template-columns:1.8em 10.5em 6.2em 1fr;gap:.7em;align-items:baseline;padding:.22em 0;font-size:var(--t-body);line-height:1.4}
+.life .row+.row{border-top:1px dashed var(--grey-2)}
+.life .n{font:var(--t-h3)/1 var(--pix);background:var(--ink);color:var(--grey);text-align:center}
+
+/* ---------- impressão / PDF: um slide por página 16:9 ---------- */
+@page{size:16in 9in;margin:0}
+@media print{
+  :root{--u:1in;--u:calc(16in / 100)}
+  html,body{height:auto;overflow:visible;background:var(--crt);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #stage{position:static;height:auto;overflow:visible}
+  .slide{display:block!important;position:relative;width:16in;height:9in;overflow:hidden;break-after:page;background:var(--blue)}
+  .slide .ln{animation:none!important;opacity:1!important}
+  .cd,.cursor{animation:none}
+  .scroll{overflow:visible}
+  .buttons,.keybar .hint{display:none}
+  .crt::after{position:absolute}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .slide.on .ln{animation:none}
+  .cd,.cursor{animation:none}
+}
+
+/* ---------- telas estreitas (celular, janela pequena) ---------- */
+@media screen and (max-width:820px), screen and (orientation:portrait) and (max-width:1100px){
+  :root{--u:min(1.6vw, 1.2vh)}
+  .cols,.c2,.c3{grid-template-columns:1fr}
+  .desk{padding:12px 12px 18px 10px;align-items:stretch}
+  .dlg{box-shadow:6px 6px 0 var(--shadow);padding:6px}
+  .dlg-in{padding:26px 14px 12px;border-width:4px}
+  .topbar .cmd,.keybar .hint{display:none}
+  .ls tr{display:block;padding:.4em 0}
+  .ls td{display:block;padding:0}
+  .ls td.name{white-space:normal}
+  .ls tr+tr td{border-top:0}
+  .ls tr+tr{border-top:1px dashed var(--grey-2)}
+  .boot button{flex-direction:column;gap:0}
+  .boot button b{flex:none}
+  .bios-logo{display:none}
+  .square{grid-template-columns:1fr;grid-template-areas:"gest" "req" "mod" "aval" "med" "ext"}
+  .chain{flex-direction:column}
+  .chain .arr{padding:.3em 0;flex-direction:row;gap:1.2em}
+  .chain .arr .h{display:none}
+  .chain .arr .v{display:inline}
+  .life .row{grid-template-columns:2.2em 1fr;row-gap:.2em}
+  .life .row>:nth-child(3),.life .row>:nth-child(4){grid-column:2}
+  .lv{grid-template-columns:1.6em 1fr}
+  .lv .bar{grid-column:2}
+  .crt{padding:24px 18px}
+}
+</style>
+</head>
+<body>
+<main id="stage" aria-live="polite">
+
+<!-- 1 · capa (BIOS) -->
+<section class="slide" data-crt>
+  <div class="crt">
+    <div class="ln hi">UNIVILLE BIOS v20.26 — Sistemas de Informação</div>
+    <div class="ln dim">Aviso: o tema “.iso” é só trocadilho. O assunto são as normas ISO/IEC.</div>
+    <div class="ln"> </div>
+    <div class="ln">Disciplina ...... <span class="hi">Fundamentos de Engenharia de Software</span></div>
+    <div class="ln">Professor ....... <span class="hi">Sergio Odilon Fischer</span></div>
+    <div class="ln">Detectando integrantes do grupo...</div>
+    <div class="ln">  [0] Vinícius Pupo Estevom      <span class="ok">OK</span></div>
+    <div class="ln">  [1] Thiago Wendt Percyak       <span class="ok">OK</span></div>
+    <div class="ln">  [2] Henrique Miguel da Silva   <span class="ok">OK</span></div>
+    <div class="ln">  [3] Pedro Luca de Sena         <span class="ok">OK</span></div>
+    <div class="ln">  [4] Arthur Voit Reder          <span class="ok">OK</span></div>
+    <div class="ln">Unidade óptica: <span class="hi">TRABALHO_ISO-IEC.iso</span></div>
+    <div class="bios-logo"><div class="star">✱</div>Joinville – SC<br>2026</div>
+    <div class="big bios-title">
+      <div class="ln"><h1><span>ISO</span> <span>IEC</span> <span>ABNT</span></h1></div>
+      <div class="ln"><p>Normas ISO/IEC e qualidade de software</p></div>
+      <div class="ln hi" style="margin-top:.6em">Pressione → para dar boot <span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · roteiro (menu de boot) -->
+<section class="slide" data-crt data-menu>
+  <div class="boot">
+    <div class="bootbox">
+      <h2>FENS Boot Manager — escolha a imagem a montar</h2>
+      <ul id="bootmenu">
+        <li><button data-goto="siglas" style="--acc:var(--c1)"><b>siglas.iso</b><span>O que significam ISO, IEC e ABNT</span></button></li>
+        <li><button data-goto="normas" style="--acc:var(--c2)"><b>normas.iso</b><span>As normas 14598-5, 12119, 12207, 90003, 15504 e 25000</span></button></li>
+        <li><button data-goto="square" style="--acc:var(--c3)"><b>square.iso</b><span>Modelos de qualidade: como a ISO/IEC 25000 se organiza</span></button></li>
+        <li><button data-goto="ciclo" style="--acc:var(--c4)"><b>ciclo.iso</b><span>Qualidade no ciclo de vida do software</span></button></li>
+        <li><button data-goto="conceitos" style="--acc:var(--c5)"><b>conceitos.iso</b><span>Qualidade interna, externa e em uso</span></button></li>
+        <li><button data-goto="halt" style="--acc:var(--crt-hi)"><b>shutdown</b><span>Síntese, referências e perguntas</span></button></li>
+      </ul>
+      <p class="help">↑ ↓ escolhe · Enter monta · → segue a ordem do roteiro</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · o trocadilho -->
+<section class="slide chrome" data-img="/dev/cdrom" data-cmd="file TRABALHO_ISO-IEC.iso" data-tt="Aviso do sistema">
+  <div class="cols c2" style="align-items:center">
+    <div>
+      <h2>Por que tudo aqui termina em .iso?</h2>
+      <p>É um trocadilho. Arquivos de imagem de disco usam a extensão <b>.iso</b> porque o CD-ROM segue a norma <b>ISO 9660</b>.</p>
+      <p>Por isso cada assunto desta apresentação é uma “imagem” que vamos montar.</p>
+      <div class="note">O trabalho não é sobre imagens de disco. É sobre as <b>normas ISO/IEC</b> que definem como desenvolver, avaliar e medir a <b>qualidade de software</b>.</div>
+    </div>
+    <div><div class="cd" role="img" aria-label="CD girando com o rótulo ISO 9660"></div></div>
+  </div>
+</section>
+
+<!-- 4 · mount siglas -->
+<section class="slide" data-crt data-id="siglas" style="--acc:var(--c1)">
+  <div class="crt">
+    <div class="ln"><span class="hi">root@fens:~#</span> mount siglas.iso /mnt/siglas</div>
+    <div class="ln dim">[ 1906] IEC detectada (Londres)</div>
+    <div class="ln dim">[ 1940] ABNT detectada (Rio de Janeiro)</div>
+    <div class="ln dim">[ 1947] ISO detectada (Genebra)</div>
+    <div class="ln"><span class="ok">montado</span> em /mnt/siglas</div>
+    <div class="big">
+      <div class="ln"><h1>ISO? IEC? ABNT?</h1></div>
+      <div class="ln"><p>Quem são as organizações por trás das siglas</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · ISO -->
+<section class="slide chrome" data-img="siglas.iso" data-cmd="cat /mnt/siglas/ISO" data-tt="ISO" style="--acc:var(--c1)">
+  <div class="cols c2">
+    <div>
+      <h2><span class="disc-tag">ISO</span>International Organization for Standardization</h2>
+      <p>Em português: <b>Organização Internacional de Normalização</b>. Elabora normas para praticamente todos os setores: gestão, qualidade, saúde, segurança, tecnologia.</p>
+      <p>ISO não é uma sigla. Em inglês seria IOS, em francês OIN. O nome vem do grego <i>ísos</i>, que significa <b>igual</b>: a mesma regra em qualquer país.</p>
+    </div>
+    <div>
+      <div class="kv"><span class="k">Fundação</span><span class="fill"></span><span class="v">1947</span></div>
+      <div class="kv"><span class="k">Sede</span><span class="fill"></span><span class="v">Genebra, Suíça</span></div>
+      <div class="kv"><span class="k">Natureza</span><span class="fill"></span><span class="v">ONG independente</span></div>
+      <div class="kv"><span class="k">Membros</span><span class="fill"></span><span class="v">+170 países</span></div>
+      <div class="kv"><span class="k">Exemplo famoso</span><span class="fill"></span><span class="v">ISO 9001</span></div>
+      <div class="kv"><span class="k">Brasil</span><span class="fill"></span><span class="v">ABNT</span></div>
+      <p class="small" style="margin-top:.8em">Cada país tem um único membro: o seu organismo nacional de normalização.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · IEC -->
+<section class="slide chrome" data-img="siglas.iso" data-cmd="cat /mnt/siglas/IEC" data-tt="IEC" style="--acc:var(--c1)">
+  <div class="cols c2">
+    <div>
+      <h2><span class="disc-tag">IEC</span>International Electrotechnical Commission</h2>
+      <p>Em português: <b>Comissão Eletrotécnica Internacional</b>. Elabora as normas internacionais de tecnologias <b>elétricas, eletrônicas e relacionadas</b>.</p>
+      <p>Se tem tomada, bateria ou chip, provavelmente segue uma norma IEC. Um exemplo é o “IP68” do celular, da norma IEC 60529.</p>
+    </div>
+    <div>
+      <div class="kv"><span class="k">Fundação</span><span class="fill"></span><span class="v">1906, Londres</span></div>
+      <div class="kv"><span class="k">Sede atual</span><span class="fill"></span><span class="v">Genebra, Suíça</span></div>
+      <div class="kv"><span class="k">1º presidente</span><span class="fill"></span><span class="v">Lord Kelvin</span></div>
+      <div class="kv"><span class="k">Área</span><span class="fill"></span><span class="v">Eletrotécnica</span></div>
+      <p class="small" style="margin-top:.8em">É a mais antiga das três. A ISO cuida de quase todo o resto; a IEC, do lado elétrico e eletrônico.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · ISO/IEC -->
+<section class="slide chrome" data-img="siglas.iso" data-cmd="cat /mnt/siglas/ISO-IEC" data-tt="ISO/IEC" style="--acc:var(--c1)">
+  <h2>Por que as normas de software são “ISO/IEC”?</h2>
+  <div class="cols c2">
+    <div>
+      <p>Computação é ao mesmo tempo eletrônica (área da IEC) e informação (área da ISO). Para não fazer normas duplicadas, em <b>1987</b> as duas criaram um comitê conjunto: o <b>ISO/IEC JTC 1</b>, de tecnologia da informação.</p>
+      <p>Dentro dele, o subcomitê <b>SC 7</b> cuida de <b>engenharia de software e de sistemas</b>.</p>
+    </div>
+    <div>
+      <p style="font-weight:700;margin-bottom:.4em">Todas as normas deste trabalho saíram do JTC 1/SC 7:</p>
+      <table class="ls">
+        <tr><td class="name">ISO/IEC 14598-5</td><td>avaliação de produto</td></tr>
+        <tr><td class="name">ISO/IEC 12119</td><td>pacotes de software</td></tr>
+        <tr><td class="name">ISO/IEC 12207</td><td>ciclo de vida</td></tr>
+        <tr><td class="name">ISO/IEC 90003</td><td>ISO 9001 para software</td></tr>
+        <tr><td class="name">ISO/IEC 15504</td><td>avaliação de processo</td></tr>
+        <tr><td class="name">ISO/IEC 25000</td><td>qualidade do produto</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · ABNT -->
+<section class="slide chrome" data-img="siglas.iso" data-cmd="cat /mnt/siglas/ABNT" data-tt="ABNT" style="--acc:var(--c1)">
+  <div class="cols c2">
+    <div>
+      <h2><span class="disc-tag">ABNT</span>Associação Brasileira de Normas Técnicas</h2>
+      <p>Entidade <b>privada e sem fins lucrativos</b>, reconhecida pelo governo como o <b>Foro Nacional de Normalização</b>.</p>
+      <p>Publica as normas brasileiras (<b>ABNT NBR</b>) e representa o Brasil na ISO e na IEC. Quando uma norma internacional é adotada aqui, ela ganha o prefixo ABNT NBR, como a <b>ABNT NBR ISO/IEC 12207</b>.</p>
+    </div>
+    <div>
+      <div class="kv"><span class="k">Fundação</span><span class="fill"></span><span class="v">1940</span></div>
+      <div class="kv"><span class="k">Na ISO</span><span class="fill"></span><span class="v">membro fundador</span></div>
+      <div class="kv"><span class="k">Normas</span><span class="fill"></span><span class="v">ABNT NBR</span></div>
+      <div class="kv"><span class="k">Onde são escritas</span><span class="fill"></span><span class="v">Comitês ABNT/CB</span></div>
+      <p class="small" style="margin-top:.8em">Nos comitês participam empresas, consumidores, governo e universidades. O texto passa por consulta nacional antes de ser publicado. A mais conhecida dos estudantes: a NBR 14724, de trabalhos acadêmicos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · lendo o nome -->
+<section class="slide chrome" data-img="siglas.iso" data-cmd="stat ISO-IEC_14598-5_1998.iso" data-tt="Lendo o nome de uma norma" style="--acc:var(--c1)">
+  <h2>O nome conta a história da norma</h2>
+  <div class="decode" aria-label="ISO/IEC 14598-5:1998">
+    <div class="seg" style="--c:#145578"><span class="t">ISO/IEC</span><span class="br"></span><span class="lb"><b>Origem</b>feita em conjunto pela ISO e pela IEC</span></div>
+    <div class="seg" style="--c:#9e1119"><span class="t">14598</span><span class="br"></span><span class="lb"><b>Número</b>a série: avaliação de produto de software</span></div>
+    <div class="seg" style="--c:#12592c"><span class="t">-5</span><span class="br"></span><span class="lb"><b>Parte</b>parte 5 da série: processo para avaliadores</span></div>
+    <div class="seg" style="--c:#5b2a00"><span class="t">:1998</span><span class="br"></span><span class="lb"><b>Edição</b>ano de publicação</span></div>
+  </div>
+  <p style="margin-top:1em"><b>ABNT NBR ISO/IEC 12207:2009</b> é a ISO/IEC 12207 traduzida e adotada no Brasil. O prefixo mostra o caminho da norma: internacional → nacional.</p>
+</section>
+
+<!-- 10 · mount normas -->
+<section class="slide" data-crt data-id="normas" style="--acc:var(--c2)">
+  <div class="crt">
+    <div class="ln"><span class="hi">root@fens:~#</span> mount normas.iso /mnt/normas</div>
+    <div class="ln dim">carregando 14598-5 ... 12119 ... 12207 ... 90003 ... 15504 ... 25000</div>
+    <div class="ln"><span class="ok">montado</span> em /mnt/normas — 6 normas de engenharia de software</div>
+    <div class="big">
+      <div class="ln"><h1>As normas</h1></div>
+      <div class="ln"><p>O que cada uma descreve <i>e se ainda está em vigor</i></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · visão geral -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="ls -l /mnt/normas" data-tt="Conteúdo da imagem" style="--acc:var(--c2)">
+  <h2>Seis normas, dois focos</h2>
+  <table class="ls">
+    <tr><td class="name">ISO/IEC 14598-5</td><td><span class="chip prod">produto</span></td><td>Processo de avaliação de produto, para avaliadores</td><td class="dim">1998 → hoje ISO/IEC 25040</td></tr>
+    <tr><td class="name">ISO/IEC 12119</td><td><span class="chip prod">produto</span></td><td>Pacotes de software: requisitos de qualidade e testes</td><td class="dim">1994 → hoje ISO/IEC 25051</td></tr>
+    <tr><td class="name">ISO/IEC 12207</td><td><span class="chip proc">processo</span></td><td>Processos do ciclo de vida do software</td><td class="dim">1995 → hoje ISO/IEC/IEEE 12207:2017</td></tr>
+    <tr><td class="name">ISO/IEC 90003</td><td><span class="chip proc">processo</span></td><td>Como aplicar a ISO 9001 ao software</td><td class="dim">2004 → em vigor (2018)</td></tr>
+    <tr><td class="name">ISO/IEC 15504</td><td><span class="chip proc">processo</span></td><td>Avaliação e melhoria de processos (SPICE)</td><td class="dim">1998 → hoje série ISO/IEC 330xx</td></tr>
+    <tr><td class="name">ISO/IEC 25000</td><td><span class="chip prod">produto</span></td><td>SQuaRE: requisitos e avaliação da qualidade</td><td class="dim">2005 → em vigor (2014)</td></tr>
+  </table>
+  <div class="note">As normas de <b>produto</b> olham para o software pronto. As de <b>processo</b> olham para a forma como ele é feito. As duas visões se completam: um bom processo aumenta a chance de um bom produto.</div>
+</section>
+
+<!-- 12 · 14598-5 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-14598-5" data-tt="ISO/IEC 14598-5" style="--acc:var(--c2)">
+  <div class="cols c2">
+    <div>
+      <h2>14598-5: processo de avaliação para avaliadores</h2>
+      <p>A série <b>ISO/IEC 14598</b> trata da <b>avaliação de produto de software</b> e era usada junto com o modelo de qualidade da ISO/IEC 9126.</p>
+      <p>A <b>parte 5</b> orienta quem faz a avaliação: um laboratório independente, o fornecedor ou o comprador. O objetivo é que a avaliação seja:</p>
+      <p><b>repetível</b> · <b>reprodutível</b> · <b>imparcial</b> · <b>objetiva</b></p>
+      <p class="small">Hoje foi substituída pela ISO/IEC 25040, da família 25000.</p>
+    </div>
+    <div>
+      <h3>As cinco atividades da avaliação</h3>
+      <ol class="steps">
+        <li><span><b>Estabelecer os requisitos</b>: o que avaliar e por quê.</span></li>
+        <li><span><b>Especificar</b>: quais características medir e com que critérios.</span></li>
+        <li><span><b>Projetar</b>: plano, métodos, recursos e cronograma.</span></li>
+        <li><span><b>Executar</b>: medir e comparar com os critérios.</span></li>
+        <li><span><b>Concluir</b>: relatório da avaliação para o requerente.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · 12119 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-12119" data-tt="ISO/IEC 12119" style="--acc:var(--c2)">
+  <div class="cols c2">
+    <div>
+      <h2>12119: pacotes de software</h2>
+      <p>Trata de <b>pacotes de software</b>: produtos prontos, vendidos “de prateleira” para muitos clientes, como um antivírus, um editor de texto ou um sistema de gestão padrão.</p>
+      <p>Define <b>requisitos de qualidade</b> que o pacote deve cumprir e <b>instruções de teste</b> para verificar se ele cumpre.</p>
+      <p class="small">Publicada em 1994. Foi substituída pela ISO/IEC 25051, da família 25000.</p>
+    </div>
+    <div>
+      <h3>Requisitos para três itens</h3>
+      <table class="ls">
+        <tr><td class="name">Descrição do produto</td><td>Diz o que o software faz, para o comprador decidir se serve para ele</td></tr>
+        <tr><td class="name">Documentação do usuário</td><td>Manual completo, correto e coerente com o produto</td></tr>
+        <tr><td class="name">Programas e dados</td><td>O software deve fazer o que a descrição e o manual prometem</td></tr>
+      </table>
+      <p class="small" style="margin-top:.6em">O teste é de conformidade (caixa-preta): confere o produto contra o que foi prometido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · 12207 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-12207" data-tt="ISO/IEC 12207" style="--acc:var(--c2)">
+  <h2>12207: processos do ciclo de vida do software</h2>
+  <p>Cria uma <b>estrutura comum</b> de processos, com vocabulário único, para todo o ciclo de vida: da aquisição à retirada do software. Ela diz <b>o que</b> deve ser feito, não <b>como</b>: serve tanto para cascata quanto para métodos ágeis.</p>
+  <div class="cols c3" style="margin-top:1em;gap:calc(var(--u)*2)">
+    <div class="box"><span class="code">Fundamentais</span><span class="d">Aquisição, fornecimento, desenvolvimento, operação e manutenção</span></div>
+    <div class="box"><span class="code">De apoio</span><span class="d">Documentação, gerência de configuração, garantia da qualidade, verificação, validação, revisão conjunta, auditoria e resolução de problemas</span></div>
+    <div class="box"><span class="code">Organizacionais</span><span class="d">Gerência, infraestrutura, melhoria e treinamento</span></div>
+  </div>
+  <p class="small" style="margin-top:1em">Grupos da versão original (1995). A versão atual, ISO/IEC/IEEE 12207:2017, reorganiza em processos de acordo, organizacionais, de gestão técnica e técnicos. No Brasil: ABNT NBR ISO/IEC 12207.</p>
+</section>
+
+<!-- 15 · 90003 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-90003" data-tt="ISO/IEC 90003" style="--acc:var(--c2)">
+  <div class="cols c2">
+    <div>
+      <h2>90003: a ISO 9001 aplicada ao software</h2>
+      <p>A <b>ISO 9001</b> define requisitos de um sistema de gestão da qualidade para qualquer organização: fábrica, hospital, escola.</p>
+      <p>Software, porém, é intangível e não tem “linha de produção”. Fica difícil interpretar, por exemplo, o que é “controle da produção” num projeto de software.</p>
+    </div>
+    <div>
+      <h3>O que a 90003 faz</h3>
+      <p>É um <b>guia</b>: interpreta a ISO 9001, item por item, para quem adquire, fornece, desenvolve, opera e mantém software.</p>
+      <p>Cobre requisitos, projeto, testes, gerência de configuração e manutenção, e se apoia nos processos da 12207.</p>
+      <div class="note">A empresa é certificada na <b>ISO 9001</b>. A 90003 não certifica: ela ajuda a chegar lá.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · 15504 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-15504" data-tt="ISO/IEC 15504 (SPICE)" style="--acc:var(--c2)">
+  <div class="cols c2">
+    <div>
+      <h2>15504: avaliação de processo (SPICE)</h2>
+      <p><i>Software Process Improvement and Capability dEtermination.</i> Avalia os <b>processos</b> da empresa e mede a <b>capacidade</b> de cada um.</p>
+      <p>Usa duas dimensões: os <b>processos</b> (vindos da 12207) e os <b>níveis de capacidade</b>.</p>
+      <p>Serve para <b>melhorar processos</b> (a empresa descobre onde está) e para <b>avaliar fornecedores</b> (o comprador sabe com quem está lidando).</p>
+      <p class="small">No Brasil, é uma das bases do MPS.BR. Hoje foi substituída pela série ISO/IEC 330xx.</p>
+    </div>
+    <div>
+      <h3>Níveis de capacidade de um processo</h3>
+      <div class="levels">
+        <div class="lv"><span class="n">0</span><span>Incompleto</span><span class="bar"><i style="--w:4"></i></span></div>
+        <div class="lv"><span class="n">1</span><span>Executado</span><span class="bar"><i style="--w:20"></i></span></div>
+        <div class="lv"><span class="n">2</span><span>Gerenciado</span><span class="bar"><i style="--w:40"></i></span></div>
+        <div class="lv"><span class="n">3</span><span>Estabelecido</span><span class="bar"><i style="--w:60"></i></span></div>
+        <div class="lv"><span class="n">4</span><span>Previsível</span><span class="bar"><i style="--w:80"></i></span></div>
+        <div class="lv"><span class="n">5</span><span>Em otimização</span><span class="bar"><i style="--w:100"></i></span></div>
+      </div>
+      <p class="small" style="margin-top:.6em">Do processo que nem atinge seu objetivo (0) ao processo que melhora continuamente (5).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · 25000 -->
+<section class="slide chrome" data-img="normas.iso" data-cmd="man iso-iec-25000" data-tt="ISO/IEC 25000 (SQuaRE)" style="--acc:var(--c2)">
+  <div class="cols c2">
+    <div>
+      <h2>25000: SQuaRE</h2>
+      <p><i>Systems and software Quality Requirements and Evaluation</i>: requisitos e avaliação da qualidade de sistemas e software.</p>
+      <p>Nasceu para resolver um problema: havia <b>duas séries</b> que se sobrepunham, com termos diferentes. A SQuaRE juntou as duas numa família só.</p>
+      <p>A norma 25000 em si é o <b>guia da família</b>: explica a organização, os termos e como usar as outras normas.</p>
+    </div>
+    <div>
+      <div class="box" style="margin-bottom:.6em"><span class="code">ISO/IEC 9126</span><span class="d">Modelo de qualidade e métricas do produto</span></div>
+      <div class="box" style="margin-bottom:.6em"><span class="code">ISO/IEC 14598</span><span class="d">Processo de avaliação do produto (inclui a 14598-5)</span></div>
+      <p style="text-align:center;font:var(--t-h3)/1 var(--pix);margin:.3em 0">↓ unidas em ↓</p>
+      <div class="box core"><span class="code">ISO/IEC 25000</span><span class="d">Família SQuaRE, 2005 (revisada em 2014)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 · mount square -->
+<section class="slide" data-crt data-id="square" style="--acc:var(--c3)">
+  <div class="crt">
+    <div class="ln"><span class="hi">root@fens:~#</span> mount square.iso /mnt/square</div>
+    <div class="ln dim">divisões encontradas: 2500n 2501n 2502n 2503n 2504n 2505n</div>
+    <div class="ln"><span class="ok">montado</span> em /mnt/square</div>
+    <div class="big">
+      <div class="ln"><h1>Modelos de qualidade</h1></div>
+      <div class="ln"><p>Como a ISO/IEC 25000 está organizada</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · divisões -->
+<section class="slide chrome" data-img="square.iso" data-cmd="tree /mnt/square" data-tt="Divisões da ISO/IEC 25000" style="--acc:var(--c3)">
+  <h2>Cinco divisões e as extensões</h2>
+  <div class="square">
+    <div class="box a-gest"><span class="code">2500n · Gestão da qualidade</span><span class="d">Termos, visão geral e como planejar e gerenciar a avaliação. Ex.: 25000, 25001.</span></div>
+    <div class="box a-req"><span class="code">2503n · Requisitos</span><span class="d">Como especificar requisitos de qualidade. Ex.: 25030.</span></div>
+    <div class="box core a-mod"><span class="code">2501n · Modelo de qualidade</span><span class="d">As características de qualidade. É o centro da família. Ex.: 25010, 25012 (dados).</span></div>
+    <div class="box a-aval"><span class="code">2504n · Avaliação</span><span class="d">O processo de avaliar o produto. Ex.: 25040 (sucessora da 14598-5).</span></div>
+    <div class="box a-med"><span class="code">2502n · Medição</span><span class="d">Medidas para cada característica. Ex.: 25022 (em uso), 25023 (produto).</span></div>
+    <div class="box a-ext"><span class="code">25050 a 25099 · Extensões</span><span class="d">Normas para casos específicos. Ex.: 25051, requisitos para software pronto para uso (sucessora da 12119).</span></div>
+  </div>
+</section>
+
+<!-- 20 · modelos 25010 -->
+<section class="slide chrome" data-img="square.iso" data-cmd="cat /mnt/square/2501n/25010" data-tt="ISO/IEC 25010" style="--acc:var(--c3)">
+  <h2>Os modelos de qualidade da ISO/IEC 25010</h2>
+  <div class="cols c2">
+    <div>
+      <h3>Qualidade do produto</h3>
+      <p class="small" style="margin-bottom:.4em">Propriedades do software. Vale para a qualidade interna e a externa.</p>
+      <table class="ls">
+        <tr><td class="name">Adequação funcional</td><td>faz o que precisa fazer</td></tr>
+        <tr><td class="name">Eficiência de desempenho</td><td>tempo e recursos</td></tr>
+        <tr><td class="name">Compatibilidade</td><td>convive e troca dados com outros</td></tr>
+        <tr><td class="name">Usabilidade</td><td>fácil de aprender e usar</td></tr>
+        <tr><td class="name">Confiabilidade</td><td>funciona sem falhar</td></tr>
+        <tr><td class="name">Segurança</td><td>protege informações</td></tr>
+        <tr><td class="name">Manutenibilidade</td><td>fácil de corrigir e mudar</td></tr>
+        <tr><td class="name">Portabilidade</td><td>roda em outros ambientes</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Qualidade em uso</h3>
+      <p class="small" style="margin-bottom:.4em">Resultado para o usuário, no contexto real.</p>
+      <table class="ls">
+        <tr><td class="name">Efetividade</td><td>o usuário atinge o objetivo</td></tr>
+        <tr><td class="name">Eficiência</td><td>com pouco esforço e tempo</td></tr>
+        <tr><td class="name">Satisfação</td><td>e fica satisfeito</td></tr>
+        <tr><td class="name">Ausência de risco</td><td>sem dano econômico, à saúde ou ao ambiente</td></tr>
+        <tr><td class="name">Cobertura de contexto</td><td>em todos os contextos previstos</td></tr>
+      </table>
+      <p class="small" style="margin-top:.8em">Edição de 2011. A revisão de 2023 renomeou algumas características (usabilidade virou capacidade de interação, portabilidade virou flexibilidade) e acrescentou <i>safety</i>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · mount ciclo -->
+<section class="slide" data-crt data-id="ciclo" style="--acc:var(--c4)">
+  <div class="crt">
+    <div class="ln"><span class="hi">root@fens:~#</span> mount ciclo.iso /mnt/ciclo</div>
+    <div class="ln dim">fases: requisitos → projeto → código → testes → operação → manutenção → retirada</div>
+    <div class="ln"><span class="ok">montado</span> em /mnt/ciclo</div>
+    <div class="big">
+      <div class="ln"><h1>Ciclo de vida</h1></div>
+      <div class="ln"><p>Qualidade do primeiro requisito <i>até o fim do uso</i></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 · ciclo de vida -->
+<section class="slide chrome" data-img="ciclo.iso" data-cmd="tail -f /var/log/ciclo-de-vida.log" data-tt="Qualidade no ciclo de vida" style="--acc:var(--c4)">
+  <h2>Cada fase cuida de uma visão da qualidade</h2>
+  <div class="life">
+    <div class="row"><span class="n">1</span><b>Elicitação de requisitos</b><span><span class="chip us">em uso</span></span><span>Necessidades do usuário viram requisitos de qualidade em uso, externos e internos (25030).</span></div>
+    <div class="row"><span class="n">2</span><b>Projeto e codificação</b><span><span class="chip in">interna</span></span><span>Revisões e análise do código medem a qualidade interna, sem executar.</span></div>
+    <div class="row"><span class="n">3</span><b>Testes</b><span><span class="chip ex">externa</span></span><span>O software roda em ambiente de teste: falhas, tempo de resposta.</span></div>
+    <div class="row"><span class="n">4</span><b>Implantação e operação</b><span><span class="chip us">em uso</span></span><span>Usuários reais, no contexto real, confirmam se o produto atende.</span></div>
+    <div class="row"><span class="n">5</span><b>Manutenção</b><span><span class="chip in">interna</span></span><span>Correções e melhorias voltam ao ciclo; a manutenibilidade pesa aqui.</span></div>
+    <div class="row"><span class="n">6</span><b>Retirada</b><span><span class="chip proc">processo</span></span><span>Fim do uso: desativação planejada e migração dos dados (12207).</span></div>
+  </div>
+  <p class="small" style="margin-top:.5em;max-width:none">Em todo o ciclo: a 12207 define os processos; a 15504 e a 90003 avaliam o processo; a 14598-5 / 25040 avaliam o produto.</p>
+</section>
+
+<!-- 23 · cadeia -->
+<section class="slide chrome" data-img="ciclo.iso" data-cmd="cat /mnt/ciclo/influencia" data-tt="Influência e dependência" style="--acc:var(--c4)">
+  <h2>Uma visão de qualidade sustenta a outra</h2>
+  <div class="chain">
+    <div class="box"><span class="code">Processo</span><span class="d">Como o software é feito. Medido pela 15504.</span></div>
+    <div class="arr"><span class="f"><span class="h">influencia →</span><span class="v">↓ influencia</span></span><span class="b"><span class="h">← depende de</span><span class="v">↑ depende de</span></span></div>
+    <div class="box"><span class="code">Interna</span><span class="d">O produto por dentro: código e documentos.</span></div>
+    <div class="arr"><span class="f"><span class="h">influencia →</span><span class="v">↓ influencia</span></span><span class="b"><span class="h">← depende de</span><span class="v">↑ depende de</span></span></div>
+    <div class="box"><span class="code">Externa</span><span class="d">O produto executando, em teste.</span></div>
+    <div class="arr"><span class="f"><span class="h">influencia →</span><span class="v">↓ influencia</span></span><span class="b"><span class="h">← depende de</span><span class="v">↑ depende de</span></span></div>
+    <div class="box core"><span class="code">Em uso</span><span class="d">O efeito para o usuário real.</span></div>
+  </div>
+  <div class="note">Na especificação o caminho é da direita para a esquerda: o que o usuário precisa define o que o produto deve ter. Na construção é da esquerda para a direita. Qualidade interna boa <b>não garante</b> qualidade em uso, mas sem ela é difícil chegar lá.</div>
+</section>
+
+<!-- 24 · mount conceitos -->
+<section class="slide" data-crt data-id="conceitos" style="--acc:var(--c5)">
+  <div class="crt">
+    <div class="ln"><span class="hi">root@fens:~#</span> mount conceitos.iso /mnt/conceitos</div>
+    <div class="ln dim">visões: interna, externa, em uso</div>
+    <div class="ln"><span class="ok">montado</span> em /mnt/conceitos</div>
+    <div class="big">
+      <div class="ln"><h1>Três visões</h1></div>
+      <div class="ln"><p>Qualidade interna, externa e em uso</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 · conceitos -->
+<section class="slide chrome" data-img="conceitos.iso" data-cmd="cat /mnt/conceitos/*" data-tt="No âmbito da qualidade de software" style="--acc:var(--c5)">
+  <div class="cols c3">
+    <div>
+      <h2 style="font-size:var(--t-h3);margin-bottom:.4em"><span class="chip in">interna</span></h2>
+      <p><b>Qualidade interna</b> é o conjunto de características do produto visto <b>por dentro</b>. É avaliada <b>sem executar</b> o software, sobre código-fonte, modelos e documentos.</p>
+      <p class="small"><b>Quando:</b> durante o desenvolvimento.<br><b>Como:</b> revisões, inspeções, análise estática.<br><b>Exemplo de medida:</b> complexidade do código, duplicação.</p>
+    </div>
+    <div>
+      <h2 style="font-size:var(--t-h3);margin-bottom:.4em"><span class="chip ex">externa</span></h2>
+      <p><b>Qualidade externa</b> é o conjunto de características do produto visto <b>por fora</b>. É avaliada com o software <b>executando</b>, em geral em ambiente de teste e com dados simulados.</p>
+      <p class="small"><b>Quando:</b> nos testes de sistema e homologação.<br><b>Como:</b> testes, simulações.<br><b>Exemplo de medida:</b> falhas por hora de teste, tempo de resposta.</p>
+    </div>
+    <div>
+      <h2 style="font-size:var(--t-h3);margin-bottom:.4em"><span class="chip us">em uso</span></h2>
+      <p><b>Qualidade em uso</b> é o quanto o produto, usado por <b>usuários reais</b>, permite atingir seus objetivos com efetividade, eficiência, satisfação e ausência de risco, em um <b>contexto real</b>.</p>
+      <p class="small"><b>Quando:</b> na operação.<br><b>Como:</b> observação, pesquisas com usuários.<br><b>Exemplo de medida:</b> % de tarefas concluídas, satisfação.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 26 · exemplo -->
+<section class="slide chrome" data-img="conceitos.iso" data-cmd="./exemplo --app=banco --tarefa=pix" data-tt="Exemplo" style="--acc:var(--c5)">
+  <h2>As três visões num app de banco: fazer um Pix</h2>
+  <table class="ls">
+    <tr><td><span class="chip in">interna</span></td><td>O código do módulo de pagamento passa por revisão, não tem trechos duplicados e tem baixa complexidade.</td></tr>
+    <tr><td><span class="chip ex">externa</span></td><td>Em teste, a transferência responde em menos de 2 segundos e não falha em mil execuções seguidas.</td></tr>
+    <tr><td><span class="chip us">em uso</span></td><td>Um cliente real faz o Pix em menos de 30 segundos, sem errar o valor, e se sente seguro usando o app.</td></tr>
+  </table>
+  <div class="note">O app pode passar em todos os testes (externa) e mesmo assim confundir o cliente (em uso). Por isso a avaliação precisa olhar as três visões.</div>
+</section>
+
+<!-- 27 · síntese -->
+<section class="slide chrome" data-img="/" data-cmd="cat /var/log/resumo" data-tt="Resumo da instalação" data-id="halt" data-next="Desligar">
+  <h2>Resumo</h2>
+  <div class="kv"><span class="k"><span class="disc-tag" style="--acc:var(--c1)">siglas</span></span><span class="fill"></span><span class="v">ISO e IEC fazem as normas, juntas no JTC 1; a ABNT as adota no Brasil</span></div>
+  <div class="kv"><span class="k"><span class="disc-tag" style="--acc:var(--c2)">normas</span></span><span class="fill"></span><span class="v">14598-5, 12119 e 25000 olham o produto; 12207, 90003 e 15504, o processo</span></div>
+  <div class="kv"><span class="k"><span class="disc-tag" style="--acc:var(--c3)">square</span></span><span class="fill"></span><span class="v">a 25000 organiza gestão, modelo, medição, requisitos e avaliação</span></div>
+  <div class="kv"><span class="k"><span class="disc-tag" style="--acc:var(--c4)">ciclo</span></span><span class="fill"></span><span class="v">a qualidade é planejada nos requisitos e verificada até o fim do uso</span></div>
+  <div class="kv"><span class="k"><span class="disc-tag" style="--acc:var(--c5)">conceitos</span></span><span class="fill"></span><span class="v">interna → externa → em uso: cada uma sustenta a próxima</span></div>
+</section>
+
+<!-- 28 · referências e desligamento -->
+<section class="slide" data-crt>
+  <div class="crt" style="font-size:var(--t-small);line-height:1.5">
+    <div class="ln"><span class="hi">root@fens:~#</span> cat /usr/share/doc/referencias</div>
+    <div class="ln">ABNT. Associação Brasileira de Normas Técnicas. Disponível em: https://www.abnt.org.br.</div>
+    <div class="ln">IEC. International Electrotechnical Commission. Disponível em: https://www.iec.ch.</div>
+    <div class="ln">ISO. International Organization for Standardization. Disponível em: https://www.iso.org.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 12119: information technology — software packages — quality requirements and testing. Genebra: ISO, 1994.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 14598-5: information technology — software product evaluation — part 5: process for evaluators. Genebra: ISO, 1998.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 15504-2: information technology — process assessment — part 2: performing an assessment. Genebra: ISO, 2003.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 25000: systems and software engineering — SQuaRE — guide to SQuaRE. Genebra: ISO, 2014.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 25010: systems and software engineering — SQuaRE — system and software quality models. Genebra: ISO, 2011.</div>
+    <div class="ln">ISO/IEC. ISO/IEC 90003: software engineering — guidelines for the application of ISO 9001:2015 to computer software. Genebra: ISO, 2018.</div>
+    <div class="ln">ISO/IEC/IEEE. ISO/IEC/IEEE 12207: systems and software engineering — software life cycle processes. Genebra: ISO, 2017.</div>
+    <div class="ln">KOSCIANSKI, André; SOARES, Michel dos Santos. Qualidade de software. 2. ed. São Paulo: Novatec, 2007.</div>
+    <div class="ln">PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016.</div>
+    <div class="ln">SOMMERVILLE, Ian. Engenharia de software. 10. ed. São Paulo: Pearson, 2019.</div>
+    <div class="big">
+      <div class="ln"><span class="hi">root@fens:~#</span> shutdown -h now</div>
+      <div class="ln"><h1 style="font-size:max(48px,calc(var(--u)*9));color:var(--crt-hi)">Obrigado. Perguntas?</h1></div>
+      <div class="ln" style="margin-top:.6em;font-size:var(--t-body)">Trabalho completo em PDF: <a href="download.html">download.html</a> <span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = [...stage.querySelectorAll('.slide')];
+  const total = slides.length;
+  let cur = 0;
+
+  // monta a janela do instalador em volta do conteúdo dos slides "chrome"
+  slides.forEach((s, i) => {
+    if (!s.classList.contains('chrome')) return;
+    const d = s.dataset;
+    const body = s.innerHTML;
+    s.innerHTML = `
+      <header class="topbar"><span>FENS-OS Installer — <b>${d.img || ''}</b></span><span class="cmd">${d.cmd || ''}</span></header>
+      <div class="desk"><div class="dlg"><div class="dlg-in"><span class="tt">${d.tt || ''}</span>
+        <div class="scroll">${body}</div>
+        <div class="buttons"><button data-act="prev">&lt; Voltar &gt;</button><button class="def" data-act="next">&lt; ${d.next || 'Continuar'} &gt;</button></div>
+      </div></div></div>
+      <footer class="keybar">
+        <span class="hint"><kbd>←</kbd>Voltar</span><span class="hint"><kbd>→</kbd>Avançar</span><span class="hint"><kbd>F</kbd>Tela cheia</span><span class="hint"><kbd>M</kbd>Menu</span>
+        <span class="gauge"><span>${String(i + 1).padStart(2, '0')}/${total}</span><span class="track"><span class="fill" style="width:${((i + 1) / total) * 100}%"></span></span></span>
+      </footer>`;
+  });
+
+  // numera as linhas para a animação de "digitação"
+  slides.forEach(s => s.querySelectorAll('.ln').forEach((el, i) => el.style.setProperty('--i', i)));
+
+  const idIndex = id => slides.findIndex(s => s.dataset.id === id);
+  const menu = [...document.querySelectorAll('#bootmenu button')];
+  let menuSel = 0;
+  const focusMenu = i => {
+    menuSel = (i + menu.length) % menu.length;
+    menu.forEach((b, j) => b.classList.toggle('sel', j === menuSel));
+  };
+
+  function go(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    slides[cur].classList.remove('on');
+    cur = n;
+    void slides[cur].offsetWidth;
+    slides[cur].classList.add('on');
+    const sc = slides[cur].querySelector('.scroll, .crt');
+    if (sc) sc.scrollTop = 0;
+    history.replaceState(null, '', '#' + (cur + 1));
+    if ('menu' in slides[cur].dataset) focusMenu(menuSel);
+  }
+
+  menu.forEach((b, i) => {
+    b.addEventListener('click', e => { e.stopPropagation(); go(idIndex(b.dataset.goto)); });
+    b.addEventListener('mouseenter', () => focusMenu(i));
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key;
+    const onMenu = 'menu' in slides[cur].dataset;
+    if (onMenu && (k === 'ArrowUp' || k === 'ArrowDown')) { focusMenu(menuSel + (k === 'ArrowDown' ? 1 : -1)); e.preventDefault(); return; }
+    if (onMenu && k === 'Enter') { go(idIndex(menu[menuSel].dataset.goto)); e.preventDefault(); return; }
+    if (k === 'ArrowUp' || k === 'ArrowDown') {          // rola a janela, se houver conteúdo escondido
+      const sc = slides[cur].querySelector('.scroll, .crt');
+      if (sc) sc.scrollBy({ top: (k === 'ArrowDown' ? 1 : -1) * 80 });
+      e.preventDefault(); return;
+    }
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(k)) { go(cur + 1); e.preventDefault(); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(k)) { go(cur - 1); e.preventDefault(); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(total - 1);
+    else if (k === 'm' || k === 'M') go(1);
+    else if (k === 'f' || k === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.();
+    }
+  });
+
+  stage.addEventListener('click', e => {
+    const btn = e.target.closest('[data-act]');
+    if (btn) { go(cur + (btn.dataset.act === 'next' ? 1 : -1)); return; }
+    if (e.target.closest('button,a')) return;
+    const s = slides[cur];
+    if ('crt' in s.dataset && !('menu' in s.dataset)) go(cur + 1);
+  });
+
+  // deslizar no celular (só gesto horizontal, para não atrapalhar a rolagem)
+  let t0 = null;
+  stage.addEventListener('touchstart', e => { t0 = e.touches[0]; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (!t0) return;
+    const dx = e.changedTouches[0].clientX - t0.clientX;
+    const dy = e.changedTouches[0].clientY - t0.clientY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1));
+    t0 = null;
+  });
+
+  const start = parseInt(location.hash.slice(1), 10);
+  go(Number.isFinite(start) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>

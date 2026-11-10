@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trabalho ISO/IEC</title>
+<meta name="description" content="Trabalho escrito: ISO, IEC, ABNT e normas ISO/IEC de qualidade de software. Versão para impressão e PDF.">
+<style>
+@page{size:A4;margin:3cm 2cm 2cm 3cm;@top-right{content:counter(page);font:10pt "Times New Roman","Liberation Serif",serif}}
+@page:first{@top-right{content:none}}
+:root{--paper:#fff;--ink:#000;--desk:#d9dadf}
+*{box-sizing:border-box}
+html{background:var(--desk)}
+body{margin:0;color:var(--ink);font:12pt/1.5 "Times New Roman","Liberation Serif",Times,serif}
+.doc{background:var(--paper);max-width:21cm;margin:24px auto;padding:3cm 2cm 2cm 3cm;box-shadow:0 0 0 1px #b9bbc2}
+p{margin:0 0 .6em;text-align:justify;text-indent:1.25cm;hyphens:auto}
+h1,h2,h3{font-size:12pt;margin:1.6em 0 .8em;line-height:1.5;break-after:avoid}
+h1{text-transform:uppercase;font-weight:700}
+h2{font-weight:700}
+h3{font-weight:400;font-style:italic}
+ul,ol{margin:0 0 .8em 1.25cm;padding-left:1em}
+li{margin-bottom:.2em;text-align:justify}
+table{border-collapse:collapse;width:100%;margin:.4em 0 .2em;font-size:10pt;line-height:1.3;break-inside:avoid}
+th,td{border-top:1px solid #000;border-bottom:1px solid #000;padding:4px 6px;text-align:left;vertical-align:top}
+th{font-weight:700}
+.legenda{font-size:10pt;text-align:center;text-indent:0;margin-bottom:.2em}
+.fonte{font-size:10pt;text-indent:0;margin-bottom:1em}
+.capa{display:flex;flex-direction:column;justify-content:space-between;min-height:24.7cm;text-align:center;text-transform:uppercase;break-after:page}
+.capa p{text-align:center;text-indent:0;margin:0}
+.capa .titulo{font-weight:700;font-size:14pt}
+.sumario{break-after:page}
+.sumario h1{text-align:center}
+.sumario ol{list-style:none;margin:0;padding:0}
+.sumario li{text-align:left;margin:0}
+.sumario li.n2{padding-left:1.25cm}
+.nova{break-before:page}
+.ref p{text-indent:0;text-align:left;margin-bottom:1em;line-height:1.15}
+.ref h1{text-align:center}
+.nota-tela{max-width:21cm;margin:24px auto 0;font:14px/1.4 system-ui,sans-serif;color:#222;text-align:center}
+.nota-tela a{color:#1b2f8a}
+@media screen and (max-width:22cm){
+  .doc{margin:0;padding:24px 16px;box-shadow:none}
+  .capa{min-height:auto;gap:48px}
+}
+@media print{
+  html,body{background:none}
+  .doc{margin:0;padding:0;box-shadow:none;max-width:none}
+  .nota-tela{display:none}
+}
+</style>
+</head>
+<body>
+<p class="nota-tela">Versão para impressão do trabalho. Para baixar em PDF, use a <a href="download.html">página de download</a>.</p>
+<article class="doc">
+
+<section class="capa">
+  <div>
+    <p>Universidade da Região de Joinville</p>
+    <p>Sistemas de Informação</p>
+    <p>Fundamentos de Engenharia de Software</p>
+  </div>
+  <div>
+    <p>Vinícius Pupo Estevom</p>
+    <p>Thiago Wendt Percyak</p>
+    <p>Henrique Miguel da Silva</p>
+    <p>Pedro Luca de Sena</p>
+    <p>Arthur Voit Reder</p>
+  </div>
+  <div>
+    <p class="titulo">Trabalho ISO/IEC</p>
+    <p>Normas ISO/IEC e qualidade de software</p>
+    <p style="margin-top:1.5em;text-transform:none">Professor: Sergio Odilon Fischer</p>
+  </div>
+  <div>
+    <p>Joinville – SC</p>
+    <p>2026</p>
+  </div>
+</section>
+
+<section class="sumario">
+  <h1>Sumário</h1>
+  <ol>
+    <li>1 INTRODUÇÃO</li>
+    <li>2 ISO, IEC E ABNT</li>
+    <li class="n2">2.1 ISO</li>
+    <li class="n2">2.2 IEC</li>
+    <li class="n2">2.3 ISO/IEC: normas conjuntas</li>
+    <li class="n2">2.4 ABNT</li>
+    <li>3 DESCRIÇÃO DAS NORMAS ISO/IEC</li>
+    <li class="n2">3.1 ISO/IEC 14598-5</li>
+    <li class="n2">3.2 ISO/IEC 12119</li>
+    <li class="n2">3.3 ISO/IEC 12207</li>
+    <li class="n2">3.4 ISO/IEC 90003</li>
+    <li class="n2">3.5 ISO/IEC 15504</li>
+    <li class="n2">3.6 ISO/IEC 25000</li>
+    <li>4 MODELOS DE QUALIDADE</li>
+    <li class="n2">4.1 Organização da ISO/IEC 25000</li>
+    <li class="n2">4.2 Modelos de qualidade da ISO/IEC 25010</li>
+    <li>5 QUALIDADE NO CICLO DE VIDA DO SOFTWARE</li>
+    <li>6 QUALIDADE EM USO, INTERNA E EXTERNA</li>
+    <li class="n2">6.1 Qualidade em uso</li>
+    <li class="n2">6.2 Qualidade interna</li>
+    <li class="n2">6.3 Qualidade externa</li>
+    <li class="n2">6.4 Relação entre as três visões</li>
+    <li>7 CONSIDERAÇÕES FINAIS</li>
+    <li>REFERÊNCIAS</li>
+  </ol>
+</section>
+
+<h1>1 Introdução</h1>
+<p>A qualidade de software deixou de ser uma questão de opinião quando passou a ser descrita em normas técnicas. Normas são documentos estabelecidos por consenso e aprovados por um organismo reconhecido, que fornecem regras e diretrizes para uso comum e repetido. No caso do software, elas definem um vocabulário comum, processos de desenvolvimento e critérios para avaliar se um produto atende às necessidades de quem o usa.</p>
+<p>Este trabalho apresenta o significado das siglas ISO, IEC e ABNT, descreve as normas ISO/IEC 14598-5, 12119, 12207, 90003, 15504 e 25000, explica como a família ISO/IEC 25000 organiza os modelos de qualidade, discute a qualidade ao longo do ciclo de vida do software e conceitua qualidade em uso, qualidade interna e qualidade externa. A metodologia utilizada é a pesquisa bibliográfica e documental.</p>
+
+<h1>2 ISO, IEC e ABNT</h1>
+
+<h2>2.1 ISO</h2>
+<p>A ISO (<i>International Organization for Standardization</i>, Organização Internacional de Normalização) é uma organização não governamental e independente, fundada em 1947 e sediada em Genebra, na Suíça. Seus membros são os organismos nacionais de normalização de mais de 170 países, um por país. A ISO elabora normas para praticamente todos os setores, como gestão da qualidade (ISO 9001), gestão ambiental (ISO 14001) e segurança.</p>
+<p>O nome ISO não é uma sigla. Como a abreviação seria diferente em cada idioma (IOS em inglês, OIN em francês), os fundadores adotaram “ISO”, derivado do grego <i>ísos</i>, que significa “igual”. A escolha resume o propósito da organização: estabelecer a mesma regra em qualquer país.</p>
+
+<h2>2.2 IEC</h2>
+<p>A IEC (<i>International Electrotechnical Commission</i>, Comissão Eletrotécnica Internacional) foi fundada em 1906, em Londres, e hoje também tem sede em Genebra. Seu primeiro presidente foi Lord Kelvin. A IEC elabora as normas internacionais de tecnologias elétricas, eletrônicas e relacionadas, como componentes, equipamentos, energia e segurança elétrica.</p>
+
+<h2>2.3 ISO/IEC: normas conjuntas</h2>
+<p>A tecnologia da informação pertence às duas áreas: envolve eletrônica, campo da IEC, e informação, campo da ISO. Para evitar normas duplicadas, em 1987 as duas organizações criaram o Comitê Técnico Conjunto 1 (ISO/IEC JTC 1), dedicado à tecnologia da informação. Dentro dele, o subcomitê SC 7 trata de engenharia de software e de sistemas. Por isso as normas de software levam o prefixo “ISO/IEC”, e todas as normas descritas neste trabalho foram elaboradas no âmbito do JTC 1/SC 7.</p>
+<p>O nome de uma norma traz informações sobre ela. Em “ISO/IEC 14598-5:1998”, por exemplo, “ISO/IEC” indica a origem conjunta, “14598” identifica a série, “-5” indica a parte 5 da série e “1998” é o ano da edição.</p>
+
+<h2>2.4 ABNT</h2>
+<p>A ABNT (Associação Brasileira de Normas Técnicas) é uma entidade privada e sem fins lucrativos, fundada em 1940, reconhecida pelo governo brasileiro como o Foro Nacional de Normalização. Foi membro fundador da ISO e representa o Brasil na ISO e na IEC. A ABNT publica as normas brasileiras, identificadas pelo prefixo ABNT NBR, elaboradas em comitês técnicos com participação de empresas, consumidores, governo e universidades e submetidas a consulta nacional.</p>
+<p>Quando uma norma internacional é adotada no Brasil, ela recebe o prefixo da ABNT. A ABNT NBR ISO/IEC 12207, por exemplo, é a versão brasileira da ISO/IEC 12207.</p>
+
+<h1>3 Descrição das normas ISO/IEC</h1>
+<p>As normas descritas a seguir podem ser divididas em dois grupos. As normas de produto (14598-5, 12119 e 25000) tratam do software em si e de como avaliá-lo. As normas de processo (12207, 90003 e 15504) tratam da forma como o software é desenvolvido, mantido e gerenciado. O Quadro 1 resume as seis normas.</p>
+<p class="legenda">Quadro 1 – Normas ISO/IEC descritas neste trabalho</p>
+<table>
+  <tr><th>Norma</th><th>Foco</th><th>Assunto</th><th>Situação</th></tr>
+  <tr><td>ISO/IEC 14598-5</td><td>Produto</td><td>Processo de avaliação para avaliadores</td><td>1998; substituída pela ISO/IEC 25040</td></tr>
+  <tr><td>ISO/IEC 12119</td><td>Produto</td><td>Pacotes de software: requisitos de qualidade e testes</td><td>1994; substituída pela ISO/IEC 25051</td></tr>
+  <tr><td>ISO/IEC 12207</td><td>Processo</td><td>Processos do ciclo de vida do software</td><td>1995; atual ISO/IEC/IEEE 12207:2017</td></tr>
+  <tr><td>ISO/IEC 90003</td><td>Processo</td><td>Aplicação da ISO 9001 ao software</td><td>2004; edição vigente de 2018</td></tr>
+  <tr><td>ISO/IEC 15504</td><td>Processo</td><td>Avaliação de processos (SPICE)</td><td>1998–2006; substituída pela série ISO/IEC 330xx</td></tr>
+  <tr><td>ISO/IEC 25000</td><td>Produto</td><td>SQuaRE: requisitos e avaliação da qualidade</td><td>2005; edição vigente de 2014</td></tr>
+</table>
+<p class="fonte">Fonte: elaborado pelos autores (2026).</p>
+
+<h2>3.1 ISO/IEC 14598-5</h2>
+<p>A série ISO/IEC 14598 trata da avaliação de produtos de software e foi concebida para ser usada em conjunto com o modelo de qualidade da ISO/IEC 9126. É composta por seis partes: visão geral, planejamento e gestão, processo para desenvolvedores, processo para adquirentes, processo para avaliadores e documentação de módulos de avaliação.</p>
+<p>A parte 5, publicada em 1998, descreve o processo de avaliação para avaliadores, ou seja, para quem executa a avaliação: um laboratório independente, o próprio fornecedor ou o comprador. A norma estabelece que a avaliação deve ser repetível (o mesmo avaliador, ao repeti-la, chega ao mesmo resultado), reprodutível (outro avaliador chega ao mesmo resultado), imparcial e objetiva. O processo é dividido em cinco atividades:</p>
+<ol>
+  <li>estabelecer os requisitos da avaliação: definir o objetivo e o que será avaliado;</li>
+  <li>especificar a avaliação: escolher as características, as medidas e os critérios de aceitação;</li>
+  <li>projetar a avaliação: elaborar o plano, com métodos, recursos e cronograma;</li>
+  <li>executar a avaliação: aplicar as medidas e comparar os resultados com os critérios;</li>
+  <li>concluir a avaliação: entregar o relatório ao requerente.</li>
+</ol>
+<p>A ISO/IEC 14598-5 foi substituída pela ISO/IEC 25040, que integra a família ISO/IEC 25000.</p>
+
+<h2>3.2 ISO/IEC 12119</h2>
+<p>A ISO/IEC 12119, publicada em 1994, trata de pacotes de software, isto é, produtos prontos para uso, vendidos para muitos clientes sem adaptação, como antivírus, editores de texto e sistemas de gestão padronizados. A norma define requisitos de qualidade para três componentes do pacote:</p>
+<ul>
+  <li>descrição do produto: documento que informa o que o software faz, para que o comprador possa decidir se ele atende às suas necessidades;</li>
+  <li>documentação do usuário: deve ser completa, correta, consistente e compreensível;</li>
+  <li>programas e dados: o software deve funcionar como a descrição e a documentação prometem.</li>
+</ul>
+<p>A norma também traz instruções para testar se o pacote cumpre esses requisitos, por meio de testes de conformidade do tipo caixa-preta. Os requisitos de qualidade se baseiam nas características da ISO/IEC 9126. A ISO/IEC 12119 foi substituída pela ISO/IEC 25051, que pertence à divisão de extensões da família ISO/IEC 25000.</p>
+
+<h2>3.3 ISO/IEC 12207</h2>
+<p>A ISO/IEC 12207, publicada em 1995, estabelece uma estrutura comum, com terminologia bem definida, para os processos do ciclo de vida do software, desde a concepção até a retirada de uso. A norma descreve o que deve ser feito, e não como fazer, o que permite aplicá-la a diferentes modelos de desenvolvimento, do cascata aos métodos ágeis. Na versão original, os processos são organizados em três grupos:</p>
+<ul>
+  <li>processos fundamentais: aquisição, fornecimento, desenvolvimento, operação e manutenção;</li>
+  <li>processos de apoio: documentação, gerência de configuração, garantia da qualidade, verificação, validação, revisão conjunta, auditoria e resolução de problemas;</li>
+  <li>processos organizacionais: gerência, infraestrutura, melhoria e treinamento.</li>
+</ul>
+<p>A versão vigente, ISO/IEC/IEEE 12207:2017, reorganiza os processos em quatro grupos: processos de acordo, processos organizacionais de habilitação de projetos, processos de gestão técnica e processos técnicos. No Brasil, a norma foi adotada como ABNT NBR ISO/IEC 12207. A 12207 também serve de base para normas de avaliação de processo, como a ISO/IEC 15504.</p>
+
+<h2>3.4 ISO/IEC 90003</h2>
+<p>A ISO 9001 define os requisitos de um sistema de gestão da qualidade e pode ser aplicada a qualquer organização. O software, porém, tem características próprias: é intangível, não passa por uma linha de produção e boa parte do esforço está no projeto e na manutenção. Por isso, interpretar alguns requisitos da ISO 9001, como o controle da produção, é difícil para empresas de software.</p>
+<p>A ISO/IEC 90003, publicada em 2004 e revisada em 2014 e 2018, é um guia que interpreta a ISO 9001, item por item, para organizações que adquirem, fornecem, desenvolvem, operam e mantêm software. Ela aborda temas como requisitos, projeto, testes, gerência de configuração e manutenção, e se apoia nos processos da ISO/IEC 12207. A 90003 não é uma norma certificável: a organização é certificada na ISO 9001, e a 90003 orienta como atender a seus requisitos no contexto do software.</p>
+
+<h2>3.5 ISO/IEC 15504</h2>
+<p>A ISO/IEC 15504, conhecida como SPICE (<i>Software Process Improvement and Capability dEtermination</i>), é a norma de avaliação de processos de software. Foi publicada inicialmente como relatório técnico em 1998 e como norma internacional entre 2003 e 2006. Ela avalia os processos de uma organização em duas dimensões: a dimensão de processo, baseada nos processos da ISO/IEC 12207, e a dimensão de capacidade, que mede quão bem cada processo é executado, em seis níveis:</p>
+<ol start="0">
+  <li>incompleto: o processo não é executado ou não atinge seu propósito;</li>
+  <li>executado: o processo atinge seu propósito;</li>
+  <li>gerenciado: o processo é planejado e acompanhado;</li>
+  <li>estabelecido: o processo segue um padrão definido pela organização;</li>
+  <li>previsível: o processo opera dentro de limites definidos e medidos;</li>
+  <li>em otimização: o processo é melhorado continuamente.</li>
+</ol>
+<p>A avaliação tem dois usos principais: a melhoria de processos, em que a organização identifica seus pontos fracos, e a determinação de capacidade, em que um comprador avalia a capacidade de um fornecedor. No Brasil, a ISO/IEC 15504 é uma das bases do modelo MPS.BR. A norma foi substituída pela série ISO/IEC 330xx.</p>
+
+<h2>3.6 ISO/IEC 25000</h2>
+<p>A ISO/IEC 25000, publicada em 2005 e revisada em 2014, é o guia da família SQuaRE (<i>Systems and software Quality Requirements and Evaluation</i>, requisitos e avaliação da qualidade de sistemas e software). A família foi criada para unificar duas séries que se sobrepunham e usavam termos diferentes: a ISO/IEC 9126, que definia o modelo de qualidade e as métricas do produto, e a ISO/IEC 14598, que definia o processo de avaliação. A norma 25000 apresenta a organização da família, a terminologia comum e orienta o uso das demais normas.</p>
+
+<h1>4 Modelos de qualidade</h1>
+
+<h2>4.1 Organização da ISO/IEC 25000</h2>
+<p>A família ISO/IEC 25000 está organizada em cinco divisões, identificadas pelos quatro primeiros dígitos do número da norma, além de uma faixa reservada para extensões, conforme o Quadro 2.</p>
+<p class="legenda">Quadro 2 – Divisões da família ISO/IEC 25000</p>
+<table>
+  <tr><th>Divisão</th><th>Nome</th><th>Conteúdo</th><th>Exemplos</th></tr>
+  <tr><td>ISO/IEC 2500n</td><td>Gestão da qualidade</td><td>Termos, visão geral da família e planejamento e gestão da avaliação</td><td>25000, 25001</td></tr>
+  <tr><td>ISO/IEC 2501n</td><td>Modelo de qualidade</td><td>Características e subcaracterísticas de qualidade; é o centro da família</td><td>25010, 25012</td></tr>
+  <tr><td>ISO/IEC 2502n</td><td>Medição da qualidade</td><td>Modelo de referência e medidas para cada característica</td><td>25020, 25022, 25023, 25024</td></tr>
+  <tr><td>ISO/IEC 2503n</td><td>Requisitos de qualidade</td><td>Como especificar requisitos de qualidade</td><td>25030</td></tr>
+  <tr><td>ISO/IEC 2504n</td><td>Avaliação da qualidade</td><td>Processo de avaliação do produto</td><td>25040, 25041</td></tr>
+  <tr><td>ISO/IEC 25050 a 25099</td><td>Extensões</td><td>Normas para situações específicas</td><td>25051</td></tr>
+</table>
+<p class="fonte">Fonte: elaborado pelos autores com base na ISO/IEC 25000 (2014).</p>
+<p>As divisões se relacionam: o modelo de qualidade (2501n) é usado para especificar requisitos (2503n), que são verificados por meio de medidas (2502n) aplicadas no processo de avaliação (2504n), tudo sob a gestão definida na divisão 2500n. Várias normas antigas têm sucessoras na família: a ISO/IEC 25040 substituiu a 14598-5, e a ISO/IEC 25051 substituiu a 12119.</p>
+
+<h2>4.2 Modelos de qualidade da ISO/IEC 25010</h2>
+<p>A ISO/IEC 25010, da divisão 2501n, define dois modelos de qualidade. O modelo de qualidade do produto descreve propriedades do software e se aplica tanto à qualidade interna quanto à externa. Na edição de 2011, ele tem oito características: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade.</p>
+<p>O modelo de qualidade em uso descreve o resultado da interação do usuário com o produto em um contexto real, por meio de cinco características: efetividade, eficiência, satisfação, ausência de risco e cobertura de contexto. A revisão de 2023 da norma renomeou algumas características do produto, como usabilidade, que passou a se chamar capacidade de interação, e portabilidade, que passou a se chamar flexibilidade, e acrescentou a característica <i>safety</i> (proteção contra danos). A família também inclui um modelo de qualidade de dados, na ISO/IEC 25012.</p>
+
+<h1>5 Qualidade no ciclo de vida do software</h1>
+<p>A qualidade no ciclo de vida do software abrange todas as etapas pelas quais o produto passa, desde a elicitação de requisitos até o fim do seu uso. Ela não é verificada apenas no final: é planejada no início e acompanhada em cada fase, com uma visão de qualidade adequada a cada momento.</p>
+<ol>
+  <li>Elicitação de requisitos: as necessidades do usuário são transformadas em requisitos de qualidade em uso, que dão origem aos requisitos de qualidade externa e, destes, aos requisitos de qualidade interna (ISO/IEC 25030).</li>
+  <li>Projeto e codificação: a qualidade interna é avaliada sem executar o software, por meio de revisões, inspeções e análise do código e dos modelos.</li>
+  <li>Testes: a qualidade externa é avaliada com o software em execução, em ambiente de teste, observando falhas, tempo de resposta e outros comportamentos.</li>
+  <li>Implantação e operação: a qualidade em uso é verificada com usuários reais, no contexto real de uso.</li>
+  <li>Manutenção: correções e melhorias retornam ao ciclo, e a manutenibilidade do produto influencia o custo e o risco das mudanças.</li>
+  <li>Retirada: no fim do uso, o software é desativado de forma planejada, com migração ou preservação dos dados, como prevê a ISO/IEC 12207.</li>
+</ol>
+<p>Ao longo de todo o ciclo, as normas atuam de forma complementar: a ISO/IEC 12207 define os processos, a ISO/IEC 15504 e a ISO/IEC 90003 avaliam e orientam a forma como esses processos são executados, e a ISO/IEC 14598-5, hoje ISO/IEC 25040, orienta a avaliação do produto.</p>
+<p>As normas também descrevem uma cadeia de influência entre as visões de qualidade: a qualidade do processo influencia a qualidade interna, que influencia a qualidade externa, que por sua vez influencia a qualidade em uso. No sentido inverso, cada visão depende da anterior. Na especificação o caminho começa no usuário: o que ele precisa define o que o produto deve ter. Na construção, o caminho começa no processo e no código.</p>
+
+<h1>6 Qualidade em uso, interna e externa</h1>
+
+<h2>6.1 Qualidade em uso</h2>
+<p>Qualidade em uso é o grau em que um produto, usado por usuários específicos, permite que eles atinjam objetivos específicos com efetividade, eficiência, satisfação e ausência de risco, em contextos de uso específicos. É a visão do usuário: não importa como o software foi construído, mas o resultado que ele produz no uso real. É medida durante a operação, com usuários reais, por meio de observação, registros de uso e pesquisas de satisfação. Exemplos de medida são a porcentagem de tarefas concluídas, o tempo para concluir uma tarefa e o nível de satisfação dos usuários.</p>
+
+<h2>6.2 Qualidade interna</h2>
+<p>Qualidade interna é o conjunto de características do produto de software do ponto de vista interno. Ela é avaliada sem executar o software, sobre artefatos como código-fonte, modelos de projeto e documentos, principalmente durante o desenvolvimento. As técnicas típicas são revisões, inspeções e análise estática. Exemplos de medida são a complexidade do código, o grau de acoplamento entre módulos e a quantidade de código duplicado.</p>
+
+<h2>6.3 Qualidade externa</h2>
+<p>Qualidade externa é o conjunto de características do produto de software do ponto de vista externo. Ela é avaliada com o software em execução, geralmente em ambiente de teste e com dados simulados, durante os testes de sistema e a homologação. Exemplos de medida são o número de falhas encontradas por hora de teste, o tempo de resposta e a taxa de recuperação após falhas.</p>
+
+<h2>6.4 Relação entre as três visões</h2>
+<p>As três visões se complementam. Considere um aplicativo bancário e a tarefa de fazer uma transferência via Pix. Na qualidade interna, o código do módulo de pagamento é revisado, não tem trechos duplicados e tem baixa complexidade. Na qualidade externa, em ambiente de teste, a transferência responde em menos de dois segundos e não falha em mil execuções seguidas. Na qualidade em uso, um cliente real consegue fazer a transferência rapidamente, sem errar o valor, e se sente seguro usando o aplicativo.</p>
+<p>Uma boa qualidade interna não garante a qualidade em uso: um aplicativo pode passar em todos os testes e, mesmo assim, confundir o usuário. Por outro lado, sem qualidade interna e externa, é improvável alcançar uma boa qualidade em uso. Por isso a avaliação de software precisa considerar as três visões.</p>
+
+<h1>7 Considerações finais</h1>
+<p>As siglas ISO e IEC identificam as organizações internacionais que, por meio do comitê conjunto JTC 1, elaboram as normas de tecnologia da informação, enquanto a ABNT representa o Brasil nesses fóruns e adota as normas internacionais no país. As normas estudadas mostram duas formas complementares de buscar qualidade: avaliar o produto, como fazem a ISO/IEC 14598-5, a ISO/IEC 12119 e a família ISO/IEC 25000, e organizar e avaliar o processo, como fazem a ISO/IEC 12207, a ISO/IEC 90003 e a ISO/IEC 15504.</p>
+<p>A família ISO/IEC 25000 reuniu os modelos e processos de avaliação em uma estrutura única, com divisões de gestão, modelo, medição, requisitos e avaliação. Ao longo do ciclo de vida, a qualidade é planejada a partir das necessidades do usuário e verificada em três visões, interna, externa e em uso, que se influenciam mutuamente. Conhecer essas normas permite especificar, construir e avaliar software com critérios objetivos e reconhecidos internacionalmente.</p>
+
+<section class="ref nova">
+<h1>Referências</h1>
+<p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b>ABNT</b>. Disponível em: https://www.abnt.org.br.</p>
+<p>INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>IEC</b>. Disponível em: https://www.iec.ch.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. <b>ISO</b>. Disponível em: https://www.iso.org.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 12119</b>: information technology — software packages — quality requirements and testing. Genebra: ISO, 1994.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 14598-5</b>: information technology — software product evaluation — part 5: process for evaluators. Genebra: ISO, 1998.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 15504-2</b>: information technology — process assessment — part 2: performing an assessment. Genebra: ISO, 2003.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 25000</b>: systems and software engineering — systems and software quality requirements and evaluation (SQuaRE) — guide to SQuaRE. Genebra: ISO, 2014.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 25010</b>: systems and software engineering — systems and software quality requirements and evaluation (SQuaRE) — system and software quality models. Genebra: ISO, 2011.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b>ISO/IEC 90003</b>: software engineering — guidelines for the application of ISO 9001:2015 to computer software. Genebra: ISO, 2018.</p>
+<p>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION; INTERNATIONAL ELECTROTECHNICAL COMMISSION; INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. <b>ISO/IEC/IEEE 12207</b>: systems and software engineering — software life cycle processes. Genebra: ISO, 2017.</p>
+<p>KOSCIANSKI, André; SOARES, Michel dos Santos. <b>Qualidade de software</b>: aprenda as metodologias e técnicas mais modernas para o desenvolvimento de software. 2. ed. São Paulo: Novatec, 2007.</p>
+<p>PRESSMAN, Roger S.; MAXIM, Bruce R. <b>Engenharia de software</b>: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016.</p>
+<p>SOMMERVILLE, Ian. <b>Engenharia de software</b>. 10. ed. São Paulo: Pearson, 2019.</p>
+</section>
+
+</article>
+</body>
+</html>

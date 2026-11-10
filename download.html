@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baixar Trabalho ISO/IEC</title>
+<meta name="description" content="Download em PDF do trabalho escrito e dos slides sobre normas ISO/IEC e qualidade de software, Univille 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1b2f8a; --blue-2:#14246e;
+  --grey:#cfd1d6; --grey-2:#a9acb4; --box:#dfe0e4;
+  --ink:#000; --shadow:#070b24;
+  --red:#c8232c; --red-ink:#9e1119;
+  --yellow:#f5d04a; --ok:#1a7a3e;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --pix:"VT323", "IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--blue)}
+body{min-height:100vh;display:flex;flex-direction:column;background:var(--blue);color:var(--ink);font:18px/1.55 var(--mono);-webkit-font-smoothing:antialiased}
+
+.topbar,.keybar{display:flex;align-items:center;gap:24px;padding:10px 24px;font-size:16px}
+.topbar{background:var(--blue-2);color:var(--yellow);justify-content:space-between}
+.topbar b{color:#fff;font-weight:600}
+.keybar{background:var(--grey);margin-top:auto;flex-wrap:wrap}
+.keybar a{color:var(--ink)}
+a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+
+main{flex:1;display:flex;flex-direction:column;align-items:center;gap:56px;padding:56px 24px 64px 16px}
+
+.dlg{background:var(--grey);padding:12px;box-shadow:16px 16px 0 var(--shadow);width:100%;max-width:1040px}
+.dlg-in{border:5px double #2b2d33;padding:44px 44px 32px;position:relative}
+.tt{position:absolute;top:-0.62em;left:50%;transform:translateX(-50%);background:var(--grey);padding:0 14px;font:34px/1 var(--pix);color:var(--blue);white-space:nowrap}
+
+h1{font:400 60px/0.95 var(--pix);margin-bottom:14px}
+.lede{max-width:64ch;margin-bottom:28px}
+h2{font:400 32px/1 var(--pix);margin-bottom:6px}
+
+/* pacotes para instalar */
+.pkgs{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pkg{border:3px solid var(--ink);background:var(--box);padding:18px 20px 20px;display:flex;flex-direction:column}
+.pkg .meta{font-size:15px;color:#2e3038;margin-bottom:10px}
+.pkg ol{list-style:none;font-size:15px;line-height:1.6;margin-bottom:16px}
+.pkg ol li{display:flex;gap:10px}
+.pkg ol li span:first-child{min-width:1.6em;color:#3d404a}
+.pkg .acts{margin-top:auto;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+
+.all{margin-top:28px;border:3px solid var(--ink);background:var(--ink);color:var(--grey);padding:18px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px}
+.all h2{color:#fff;margin:0}
+.all p{font-size:15px;flex:1;min-width:16em}
+
+.btn{display:inline-block;background:var(--red);color:#fff;text-decoration:none;font:600 18px/1 var(--mono);padding:11px 14px;white-space:nowrap}
+.btn:hover{background:var(--red-ink)}
+.all .btn{background:var(--yellow);color:var(--ink)}
+.all .btn:hover{background:#fff}
+.link{color:var(--ink);font-size:16px;text-decoration:none;white-space:nowrap}
+.link:hover{text-decoration:underline}
+
+.status{margin-top:20px;min-height:1.6em;text-align:center;font-size:16px}
+.status .ok{color:var(--ok);font-weight:700}
+.bar{display:inline-block;width:220px;max-width:50vw;height:16px;border:2px solid var(--ink);padding:2px;vertical-align:-2px;margin:0 10px}
+.bar i{display:block;height:100%;width:0;background:var(--red)}
+.bar.go i{animation:fill 1.2s steps(12) forwards}
+@keyframes fill{to{width:100%}}
+
+.foot{margin-top:22px;font-size:14px;color:#2e3038;text-align:center}
+
+@media (max-width:760px){
+  .dlg{box-shadow:8px 8px 0 var(--shadow);padding:8px}
+  .dlg-in{padding:40px 16px 24px}
+  h1{font-size:44px}
+  .pkgs{grid-template-columns:1fr}
+  .tt{font-size:28px}
+  .topbar span:last-child{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .bar.go i{animation:none;width:100%} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span>FENS-OS Installer — <b>instalar pacotes</b></span>
+  <span>apt install trabalho-iso-iec slides-iso-iec</span>
+</header>
+
+<main>
+  <section class="dlg" aria-labelledby="titulo">
+    <div class="dlg-in">
+      <span class="tt">Download</span>
+      <h1 id="titulo">Baixar o trabalho e os slides em PDF</h1>
+      <p class="lede">Normas ISO/IEC e qualidade de software. Fundamentos de Engenharia de Software, prof. Sergio Odilon Fischer. Vinícius Pupo Estevom, Thiago Wendt Percyak, Henrique Miguel da Silva, Pedro Luca de Sena e Arthur Voit Reder. Joinville – SC, 2026.</p>
+
+      <div class="pkgs">
+        <article class="pkg">
+          <h2>Trabalho escrito</h2>
+          <p class="meta">FENS_Trabalho_ISO-IEC.pdf · 12 páginas A4 · 136 KB</p>
+          <ol>
+            <li><span>1</span><span>Introdução</span></li>
+            <li><span>2</span><span>ISO, IEC e ABNT</span></li>
+            <li><span>3</span><span>Descrição das normas ISO/IEC</span></li>
+            <li><span>4</span><span>Modelos de qualidade</span></li>
+            <li><span>5</span><span>Qualidade no ciclo de vida</span></li>
+            <li><span>6</span><span>Qualidade em uso, interna e externa</span></li>
+            <li><span>7</span><span>Considerações finais e referências</span></li>
+          </ol>
+          <div class="acts">
+            <a class="btn" href="FENS_Trabalho_ISO-IEC.pdf" download="FENS_Trabalho_ISO-IEC.pdf" data-name="trabalho">&lt; Baixar PDF &gt;</a>
+            <a class="link" href="FENS_Trabalho_ISO-IEC.pdf" target="_blank" rel="noopener">Abrir em nova aba</a>
+          </div>
+        </article>
+
+        <article class="pkg">
+          <h2>Slides da apresentação</h2>
+          <p class="meta">FENS_Slides_ISO-IEC.pdf · 28 slides 16:9 · 349 KB</p>
+          <ol>
+            <li><span>1</span><span>Capa e roteiro</span></li>
+            <li><span>2</span><span>ISO, IEC e ABNT</span></li>
+            <li><span>3</span><span>As seis normas</span></li>
+            <li><span>4</span><span>Modelos de qualidade (25000)</span></li>
+            <li><span>5</span><span>Ciclo de vida</span></li>
+            <li><span>6</span><span>Interna, externa e em uso</span></li>
+            <li><span>7</span><span>Resumo e referências</span></li>
+          </ol>
+          <div class="acts">
+            <a class="btn" href="FENS_Slides_ISO-IEC.pdf" download="FENS_Slides_ISO-IEC.pdf" data-name="slides">&lt; Baixar PDF &gt;</a>
+            <a class="link" href="FENS_Slides_ISO-IEC.pdf" target="_blank" rel="noopener">Abrir em nova aba</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="all">
+        <h2>Os dois juntos</h2>
+        <p>Um arquivo .zip com o trabalho e os slides em PDF (272 KB).</p>
+        <a class="btn" href="FENS_ISO-IEC_PDFs.zip" download="FENS_ISO-IEC_PDFs.zip" data-name="pacote">&lt; Baixar .zip &gt;</a>
+      </div>
+
+      <p class="status" id="status" aria-live="polite"></p>
+      <p class="foot"><a class="link" href="index.html">&lt; Voltar à apresentação &gt;</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="keybar">
+  <a href="index.html">Apresentação</a>
+  <a href="trabalho.html">Ler o trabalho no navegador</a>
+  <span>Univille, Sistemas de Informação</span>
+</footer>
+
+<script>
+  const status = document.getElementById('status');
+  const nomes = { trabalho: 'Trabalho', slides: 'Slides', pacote: 'Pacote com os dois PDFs' };
+  const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('a[download]').forEach(a => a.addEventListener('click', () => {
+    status.innerHTML = 'Copiando <span class="bar go"><i></i></span>';
+    setTimeout(() => {
+      status.innerHTML = `<span class="ok">[ OK ]</span> ${nomes[a.dataset.name]}: download iniciado. Confira a pasta de downloads.`;
+    }, reduz ? 0 : 1300);
+  }));
+</script>
+</body>
+</html>
